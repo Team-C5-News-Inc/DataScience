@@ -1,0 +1,12 @@
+news_sites:
+    0:
+      url: https://www.vanguardia.com
+      categories: 'ul'
+      categories_attributes: {'class': 'parent-nav lst cf'}
+      find: 'li'
+      find_attributes: ''
+      article_links: '//section[@class=" article element  no-access restricted"]//article//div/a/@href'
+      queries:
+        homepage_article_links: '.noticias > article > div > a'
+        article_title: '#r00-c00 > div.portlet-boundary.portlet-static-end.content-viewer-portlet.last.full-access.restricted > div > h1'
+        article_body: '#r01-c01 > div:nth-child(3) > div > div.text.font-1.resizable > div'
