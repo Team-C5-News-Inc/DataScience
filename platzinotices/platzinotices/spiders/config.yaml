@@ -1,9 +1,0 @@
-news_sites:
-    1:
-      url: https://www.vanguardia.com
-      categories: ['https://www.vanguardia.com/area-metropolitana', 'https://www.vanguardia.com/santander', 'https://www.vanguardia.com/deportes', 'https://www.vanguardia.com/judicial', 'https://www.vanguardia.com/colombia', 'https://www.vanguardia.com/mundo', 'https://www.vanguardia.com/politica', 'https://www.vanguardia.com/economia', 'https://www.vanguardia.com/opinion', 'https://www.vanguardia.com/entretenimiento', 'https://www.vanguardia.com/kids']
-      article_links: ''
-      queries:
-        homepage_article_links: '.noticias > article > div > a'
-        article_title: '#r00-c00 > div.portlet-boundary.portlet-static-end.content-viewer-portlet.last.full-access.restricted > div > h1'
-        article_body: '#r01-c01 > div:nth-child(3) > div > div.text.font-1.resizable > div'
