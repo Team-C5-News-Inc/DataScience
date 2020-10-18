@@ -3,13 +3,30 @@ news_sites:
     url: https://www.vanguardia.com
     categories: 'ul'
     categories_attributes: {'class': 'parent-nav lst cf'}
-    find: 'li'
-    find_attributes: ''
+    find_categories: 'li'
+    find_categories_attributes: ''
     articles: 'div'
     articles_attributes: {'id':'r01-c01'}
     find_articles: 'article'
     find_articles_attributes: {}
     queries:
-      homepage_article_links: '.noticias > article > div > a'
-      article_title: '#r00-c00 > div.portlet-boundary.portlet-static-end.content-viewer-portlet.last.full-access.restricted > div > h1'
-      article_body: '#r01-c01 > div:nth-child(3) > div > div.text.font-1.resizable > div'
+      news_container: 'div'
+      news_container_attributes: {'id':'main-content'}
+      title: 'span'
+      title_attributes: {'class':'priority-content'}
+      subtitle: 'div'
+      subtitle_attributes: {'class':'subheadline font-1 bold lead'}
+      content: 'p'
+      content_attributes: {}
+      images: 'img'
+      images_attributes: {}
+      category_long: ''
+      category_long_attributes: {}
+      tags: 'span'
+      tags_attributes: {'itemprop':'keywords'}
+      author: 'div'
+      author_attributes: {'itemprop':'author'}
+      publication_date: 'div'
+      publication_date_attributes: {'itemprop':'datepublished'}
+      categories: 'span'
+      categories_attributes: {'itemprop':'name'}
