@@ -9,8 +9,13 @@ news_sites_uids = [1]
 def _extract():
     logger.info('Starting extract process')
     for news_sites_uid in news_sites_uids:
-        subprocess.run(['python', 'main.py', news_sites_uid], cwd='./extract')
+        subprocess.run(['python3', 'main.py', str(news_sites_uid)], cwd='./extract')
 
 
 def main():
     _extract()
+
+
+if __name__ == '__main__':
+    main()
+    
