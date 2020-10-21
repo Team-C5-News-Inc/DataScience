@@ -1,32 +1,17 @@
 news_sites:
   0:
     url: https://www.vanguardia.com
-    categories: 'ul'
-    categories_attributes: {'class': 'parent-nav lst cf'}
-    find_categories: 'li'
-    find_categories_attributes: ''
-    articles: 'div'
-    articles_attributes: {'id':'r01-c01'}
-    find_articles: 'article'
-    find_articles_attributes: {}
+    categories_links: '//div[@class="nav-dropdown nav noSubNav"]/ul/li/a[@class="tab-item lnk"]/@href'
+    categories_text: '//div[@class="nav-dropdown nav noSubNav"]/ul/li/a[@class="tab-item lnk"]/span[@class="sectionName"]/text()'
+    articles: '//article/div/a/@href'
     queries:
-      news_container: 'div'
-      news_container_attributes: {'id':'main-content'}
-      title: 'span'
-      title_attributes: {'class':'priority-content'}
-      subtitle: 'div'
-      subtitle_attributes: {'class':'subheadline font-1 bold lead'}
-      content: 'p'
-      content_attributes: {}
-      images: 'img'
-      images_attributes: {}
-      category_long: ''
-      category_long_attributes: {}
-      tags: 'span'
-      tags_attributes: {'itemprop':'keywords'}
-      author: 'div'
-      author_attributes: {'itemprop':'author'}
-      publication_date: 'div'
-      publication_date_attributes: {'itemprop':'datepublished'}
-      categories: 'span'
-      categories_attributes: {'itemprop':'name'}
+      title: '//div[@class="template-vg-17"]/h1[@itemprop="headline"]/span[@class="priority-content"]/text()'
+      subtitle: '//div[@class="template-vg-17"]/div[@class="subheadline font-1 bold lead"]/text()'
+      content: '//div[@class="paragraph"]//p/text()'
+      images: '//figure[@class="cutlineShow"]/div/img/@data-srcset'
+      category_long: '//*[@id="r00-c00"]/div[4]/ol/li[last()]/a/span/text()'
+      tags: '//section[@class="categoryList"]/article/a/span/text()'
+      author: '//div[@itemprop="author"]/a/text()'
+      publication_date: '//div[@class="template-vg-17"]/div[@class="date font-1"]/@content'
+      categories: '//*[@id="r00-c00"]/div[4]/ol/li/a/span/text()'
+      
