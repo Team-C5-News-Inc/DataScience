@@ -5,3 +5,4 @@ bs4
 requests
 lxml
 pandas
+urllib3

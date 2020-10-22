@@ -4,12 +4,17 @@ import re
 import logging
 import json
 from common import config
+from requests.exceptions import HTTPError
+from urllib3.exceptions import MaxRetryError
+
 logging.basicConfig(level=logging.INFO)
 
 logger = logging.getLogger(__name__)
 is_well_formed_link = re.compile(r'^https?://.+/.+$')
 is_root_path = re.compile(r'^/.+$')
+is_pdf = re.compile(r'^https?://.+\.pdf$')
 config = config
+data = {}
 
 def _replacer(objs):
     news_object = []
@@ -33,6 +38,7 @@ def _categories_urls_extraction(host, iterator):
     categories_links = config()['news_sites'][iterator]['categories_links']
     categories_names = config()['news_sites'][iterator]['categories_text']
     links_categories = []
+    
     try:
         # Requesting info from the host
         news_page = requests.get(host)
@@ -70,7 +76,11 @@ def _articles_urls_extraction(host, category_list, iterator):
                 # Extracting the article links for each category
                 article_list_tmp = parsed.xpath(article_link)
                 for article in article_list_tmp:
-                    article_list.append(_build_link(host, article))
+                    if is_pdf.match(_build_link(host, article)):
+                        continue
+                    else:
+                        article_list.append(_build_link(host, article))
+                    
             else:
                 # In case if the server is down
                 raise ValueError(f'Error {category_page.status_code}')
@@ -94,7 +104,6 @@ def _articles_extraction(host, article_urls_list, iterator):
     publication_date_query = config()['news_sites'][iterator]['queries']['publication_date']
     categories_query = config()['news_sites'][iterator]['queries']['categories']
     
-    data = {}
     data['articles'] = []
     for article in article_urls_list:
         try:
@@ -137,17 +146,22 @@ def _articles_extraction(host, article_urls_list, iterator):
             else:
                 raise ValueError(f'Error.')
                 logger.info(f'{article}: {article_page.status_code}')
-        except ValueError as e:
-            print(e)
+        except (HTTPError, MaxRetryError) as e:
+            logger.warning('Error while fetching article', exc_info=False)
 
     return data
 
 if __name__ == '__main__':
-    for i in range(len(config())):
+    data['categories'] = []
+    for i in range(2):
         host = config()['news_sites'][i]['url']
         logger.info(f'Begining scraper for {host}')
         categories_urls, categories_names = _categories_urls_extraction(host, i)
+        for category in categories_names:
+            data['categories'].append(category)
         articles_links = _articles_urls_extraction(host, categories_urls, i)
+       
+        print(articles_links)
         articles_result = _articles_extraction(host, articles_links, i)
         with open('data.json', 'w') as f:
-            json.dump(articles_result, f, indent= 4, ensure_ascii=False)
+            json.dump(data, f, indent= 4, ensure_ascii=False)

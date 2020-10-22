@@ -14,4 +14,48 @@ news_sites:
       author: '//div[@itemprop="author"]/a/text()'
       publication_date: '//div[@class="template-vg-17"]/div[@class="date font-1"]/@content'
       categories: '//*[@id="r00-c00"]/div[4]/ol/li/a/span/text()'
-      
+  1:
+    url: https://noticias.canalrcn.com
+    categories_links: '//*[@id="menu-segundario"]/div[@class="menu-portal"]/div[@class="list-portal"]/nav/ul/li/a/@href'
+    categories_text: '//*[@id="menu-segundario"]/div[@class="menu-portal"]/div[@class="list-portal"]/nav/ul/li/a/text()'
+    articles: '//section/div[@class="container"]/div[@class="row"]/div/div/a/@href'
+    queries:
+      title: '//div[@class="texto-nota"]/div[@class="row"]/div/div[@class="bloque-texto-nota"]/h1/text()'
+      subtitle: '//div[@class="texto-nota"]/div[@class="row"]/div/div[@class="bloque-texto-nota"]/h2/text()'
+      content: '//div[@class="texto-nota"]/div[@class="row"]/div/div[@id="bloque-nota-completa"]//p/text()'
+      images: '//div[@id="tipo-imagen"]/img/@src'
+      category_long: '//main[@class="main-nota"]/div[@class="content-nota"]/article[@class="newArticle"]/@subcategory'
+      tags: '//div[@class="bloque-tag"]/span/a/text()'
+      author: '//div[@class="date"]/span[@id="author"]/a/text()'
+      publication_date: '//div[@class="date"]/span[@id="IAarticle-date"]/text()'
+      categories: ''
+  2:
+    url: https://www.ntn24.com
+    categories_links: '//div[@class="menu-des"]/ul/li/a/@href'
+    categories_text: '//div[@class="menu-des"]/ul/li/a/text()'
+  articles: '//section/div[@class="container"]/div[@class="row"]/div/div[@class="nota"]/a/@href'
+    queries:
+      title: '//div[@class="texto-nota"]/div[@class="row"]/div/div[@class="bloque-texto-nota"]/h1/text()'
+      subtitle: '//div[@class="texto-nota"]/div[@class="row"]/div/div[@class="bloque-texto-nota"]/h2/text()'
+      content: '//div[@class="texto-nota"]/div[@class="row"]/div/div[@id="bloque-nota-completa"]//p/text()'
+      images: '//div[@id="tipo-imagen"]/img/@src'
+      category_long: '//main[@class="main-nota"]/div[@class="content-nota"]/article[@class="newArticle"]/@data-article-subcategory'
+      tags: '//div[@class="bloque-tag"]/span/a/text()'
+      author: '//div[@class="texto-nota"]/div[@class="row"]/div/div[@id="bloque-nota-completa"]/p[last()]/strong/text()'
+      publication_date: '//div[@class="texto-nota"]/div[@class="row"]/div/div[@class="bloque-texto-nota"]/div[@class="date"]/span[@id="IAarticle-date"]/text()'
+      categories: ''
+  3:
+    url: https://www.ntn24.com
+    categories_links: '//nav[@class="blindBox"]/ul[@class="maintabs"]/li/a/@href'
+    categories_text: '//nav[@class="blindBox"]/ul[@class="maintabs"]/li/a/span/text()'
+  articles: '//article[@class="cell"]/div/div/div[@class="txtBox"]/strong/a/@href'
+    queries:
+      title: '//div[@class="falseH1"]h1/span[@class="maintitle"]/text()'
+      subtitle: ''
+      content: '//div[@class="artBody"]//p/text()'
+      images: '//img[@itemprop="image"]/@src'
+      category_long: '//meta[@itemprop="articleSection"]/@content'
+      tags: '//div[@class="bloque-tag"]/span/a/text()'
+      author: '//div[@class="author  anonim"]/span[@itemprop="author"]/em[@itemprop="name"]/text()'
+      publication_date: '//meta[@itemprop="dateModified"]/@content'
+      categories: '//meta[@itemprop="articleSection"]/@content'
