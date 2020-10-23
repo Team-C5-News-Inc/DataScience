@@ -6,3 +6,4 @@ requests
 lxml
 pandas
 urllib3
+pymongo
