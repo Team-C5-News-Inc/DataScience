@@ -2,37 +2,34 @@ news_sites:
   0:
     url: https://www.vanguardia.com
     categories_links: '//div[@class="nav-dropdown nav noSubNav"]/ul/li/a[@class="tab-item lnk"]/@href'
-    categories_text: '//div[@class="nav-dropdown nav noSubNav"]/ul/li/a[@class="tab-item lnk"]/span[@class="sectionName"]/text()'
     articles: '//article/div/a/@href'
     queries:
       title: '//div[@class="template-vg-17"]/h1[@itemprop="headline"]/span[@class="priority-content"]/text()'
       subtitle: '//div[@class="template-vg-17"]/div[@class="subheadline font-1 bold lead"]/text()'
       content: '//div[@class="paragraph"]//p/text()'
       images: '//figure[@class="cutlineShow"]/div/img/@data-srcset'
-      category_long: '//*[@id="r00-c00"]/div[4]/ol/li[last()]/a/span/text()'
+      category_long: '//*[@id="r00-c00"]/div[4]/ol/li[2]/a/span/text()'
       tags: '//section[@class="categoryList"]/article/a/span/text()'
       author: '//div[@itemprop="author"]/a/text()'
       publication_date: '//div[@class="template-vg-17"]/div[@class="date font-1"]/@content'
-      categories: '//*[@id="r00-c00"]/div[4]/ol/li/a/span/text()'
+      categories: '//*[@id="r00-c00"]/div[4]/ol/li[2]/a/span/text()'
   1:
     url: https://noticias.canalrcn.com
     categories_links: '//div[@id="menu-segundario"]/div[@class="menu-portal"]/div[@class="list-portal"]/nav/ul/li/a/@href'
-    categories_text: '//div[@id="menu-segundario"]/div[@class="menu-portal"]/div[@class="list-portal"]/nav/ul/li/a/text()'
     articles: '//section/div[@class="container"]/div[@class="row"]/div/div/a/@href'
     queries:
       title: '//div[@class="texto-nota"]/div[@class="row"]/div/div[@class="bloque-texto-nota"]/h1/text()'
       subtitle: '//div[@class="texto-nota"]/div[@class="row"]/div/div[@class="bloque-texto-nota"]/h2/text()'
       content: '//div[@class="texto-nota"]/div[@class="row"]/div/div[@id="bloque-nota-completa"]//p/text()'
       images: '//div[@id="tipo-imagen"]/img/@src'
-      category_long: '//main[@class="main-nota"]/div[@class="content-nota"]/article[@class="newArticle"]/@subcategory'
+      category_long: '//main[@class="main-nota"]/div[@class="content-nota"]/article[@class="newArticle"]/@data-article-subcategory'
       tags: '//div[@class="bloque-tag"]/span/a/text()'
       author: '//div[@class="date"]/span[@id="author"]/a/text()'
       publication_date: '//div[@class="date"]/span[@id="IAarticle-date"]/text()'
-      categories: '//main[@class="main-nota"]/div[@class="content-nota"]/article[@class="newArticle"]/@subcategory'
+      categories: '//main[@class="main-nota"]/div[@class="content-nota"]/article[@class="newArticle"]/@data-article-subcategory'
   2:
     url: https://www.ntn24.com
     categories_links: '//div[@class="menu-des"]/ul/li/a/@href'
-    categories_text: '//div[@class="menu-des"]/ul/li/a/text()'
     articles: '//section/div[@class="container"]/div[@class="row"]/div/div[@class="nota"]/a/@href'
     queries:
       title: '//div[@class="texto-nota"]/div[@class="row"]/div/div[@class="bloque-texto-nota"]/h1/text()'
@@ -47,7 +44,6 @@ news_sites:
   3:
     url: https://www.ntn24.com
     categories_links: '//nav[@class="blindBox"]/ul[@class="maintabs"]/li/a/@href'
-    categories_text: '//nav[@class="blindBox"]/ul[@class="maintabs"]/li/a/span/text()'
     articles: '//article[@class="cell"]/div/div/div[@class="txtBox"]/strong/a/@href'
     queries:
       title: '//div[@class="falseH1"]h1/span[@class="maintitle"]/text()'
@@ -62,7 +58,6 @@ news_sites:
   4:
     url: https://www.eluniversal.com.mx
     categories_links: '//div[@id="menu-navegacion_Noticias"]/ul/li/a/@href'
-    categories_text: '//div[@id="menu-navegacion_Noticias"]/ul/li/a/text()'
     articles: '//article[contains(@class,"type-article")]/a/@href'
     queries:
       title: '//div[@class="gl-Grid_12"]/div[contains(@class,"Encabezado-Articulo")]/h1/text()'
@@ -77,7 +72,6 @@ news_sites:
   5:
     url: https://www.eleconomista.com.mx
     categories_links: '//nav[@id="main-nav"]/div[@class="left-part"]/ul/li/a/@href'
-    categories_text: '//nav[@id="main-nav"]/div[@class="left-part"]/ul/li/a/text()'
     articles: '//div[contains(@class, "entry-box")]/article/div[@class="entry-data"]/h3/a/@href'
     queries:
       title: '//div[@class="entry"]/div/div[@class="title"]/h1/text()'
@@ -86,18 +80,17 @@ news_sites:
       images: '//div[@class="entry"]/figure[@class="img-top"]/img/@src'
       category_long: '//div[@class="entry"]/div[contains(@class, "entry-top")]/div[@class="title-top"]/a[last()]/text()'
       tags: '//section[@class="main-content"]/div[@class="entry-body"]/div[@class="entry-tags"]//a[not(@class)]/text()'
-      author: '//div[@class="entry"]/div[contains(@class, "nota-autor")]/address[@cass="clearfix"]/div[@class="author-data"]/a[@class="author-name"]/text()'
-      publication_date: '//div[@class="entry"]/div[contains(@class, "nota-autor")]/address[@cass="clearfix"]/div[@class="author-data"]/span[@class="article-date"]/time[@class="entry-time"]/@datetime'
+      author: '//div[@class="entry"]/div[contains(@class, "nota-autor")]/address/div[@class="author-data"]/text()'
+      publication_date: '//div[@class="author-data"]/span[@class="article-date"]/time[@class="entry-time"]/@datetime'
       categories: '//div[@class="entry"]/div[contains(@class, "entry-top")]/div[@class="title-top"]/a[last()]/text()'
   6:
     url: https://actualidad.rt.com
     categories_links: '//nav[@class="MainMenu-root"]//div[@class="MainMenu-itemMenu"]/a/@href'
-    categories_text: '//nav[@class="MainMenu-root"]//div[@class="MainMenu-itemMenu"]/a/text()'
     articles: '//div[@class="Card-content"]/div[@class="Card-title"]/div/a/@href'
     queries:
       title: '//div[@class="ArticleView-container"]/div/div[@class="ArticleView-title"]/h1[contains(@class, "Headline")]/text()'
       subtitle: '//div[@class="ArticleView-container"]/div/div[@class="ArticleView-summary"]/div[contains(@class, "Text-root")]/text()'
-      content: '//div[@class="ArticleView-container"]/div[contains(@class, "ArticleView-block")]div[contains(@class, "Text-root")]//p[not(@class)]/text()'
+      content: '//div[@class="ArticleView-container"]/div[contains(@class, "ArticleView-block")]/div[contains(@class, "Text-root")]//p[not(@class)]/text()'
       images: '//div[@class="ArticleView-container"]/div/div[@class="ArticleView-coverWrap"]/figure[@class="Cover-root"]/div[@class="Cover-image"]/img[contains(@class, "Picture-root")]/@src'
       category_long: '//div[contains(@class, "Section-container")]/div[contains(@class, "Section-block")]/div[@class="Breadcrumbs-root"]/span[last()]/a/span/text()'
       tags: '//div[@class="ArticleView-container"]/div[contains(@class, "ArticleView-block")]/div[@class="ArticleView-tags"]/div[contains(@class, "Tags-root")]/ul//li/a/text()'

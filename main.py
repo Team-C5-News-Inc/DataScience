@@ -1,16 +1,21 @@
+import os.path
 import logging
 logging.basicConfig(level=logging.INFO)
 import subprocess
 
 logger = logging.getLogger(__name__)
 
-news_sites_uids = [1]
 
 def _extract():
     logger.info('Starting extract process')
-    for news_sites_uid in news_sites_uids:
-        subprocess.run(['python3', 'main.py', str(news_sites_uid)], cwd='./extract')
+    subprocess.run(['python3', 'extract.py'], cwd='./extract')
 
+    subprocess.run(['find', '.', '-name', '{}'.format('articles.csv'), '-exec', 'mv', '{}', '../transform/{}'.format('articles.csv'), ';'], cwd='./extract')
+    subprocess.run(['find', '.', '-name', '{}'.format('articles.csv'), '-exec', 'mv', '{}', '../transform/{}'.format('articles.csv'), ';'], cwd='./extract')
+
+    subprocess.run(['find', '.', '-name', '{}'.format('categories.csv'), '-exec', 'mv', '{}', '../transform/{}'.format('categories.csv'), ';'], cwd='./extract')
+    subprocess.run(['find', '.', '-name', '{}'.format('categories.csv'), '-exec', 'mv', '{}', '../transform/{}'.format('categories.csv'), ';'], cwd='./extract')
+        
 
 def main():
     _extract()
