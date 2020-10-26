@@ -244,7 +244,7 @@ if __name__ == '__main__':
         writer.writerows(data['articles'])
         f.close()
 
-    with open('categories.csv', 'w+') as f:
+    with open('categories.csv', 'a+') as f:
         writer = csv.DictWriter(f, fieldnames=['categories'])
         writer.writeheader()
         writer.writerows(data['categories'])
