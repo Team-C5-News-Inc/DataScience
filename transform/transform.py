@@ -1,6 +1,8 @@
 import os.path
 import pandas as pd
 import logging
+import csv
+import datetime
 logging.basicConfig(level=logging.INFO)
 
 logger = logging.getLogger(__name__)
@@ -12,6 +14,7 @@ def _delete_empty_titles_and_bodies(df):
             df.drop(title, axis = 0, inplace = True)
 
     return df
+
 
 def _delete_first_space_categories(df_categories):
     df_categories = df_categories.dropna()
