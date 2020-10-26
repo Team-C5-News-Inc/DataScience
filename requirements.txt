@@ -1,9 +1,8 @@
-autopep8
 pyyaml
-bs4
 requests
 lxml
 pandas
 urllib3
 pymongo
 dnspython
+win_unicode_console
