@@ -1,7 +1,7 @@
 news_sites:
   0:
     url: https://www.vanguardia.com
-    categories_links: '//div[@class="nav-dropdown nav noSubNav"]/ul/li/a[@class="tab-item lnk"]/@href'
+    categories_links: '//div[@class="nav-dropdown nav noSubNav"]/ul/li[1]/a/@href'
     articles: '//article/div/a/@href'
     queries:
       title: '//div[@class="template-vg-17"]/h1[@itemprop="headline"]/span[@class="priority-content"]/text()'
@@ -88,7 +88,7 @@ news_sites:
     categories_links: '//nav[@class="MainMenu-root"]//div[@class="MainMenu-itemMenu"]/a/@href'
     articles: '//div[@class="Card-content"]/div[@class="Card-title"]/div/a/@href'
     queries:
-      title: '//div[@class="ArticleView-container"]/div/div[@class="ArticleView-title"]/h1[contains(@class, "Headline")]/text()'
+      title: '//div[@class="ArticleView-container"]/div/div[@class="ArticleView-title"]/h1/text()'
       subtitle: '//div[@class="ArticleView-container"]/div/div[@class="ArticleView-summary"]/div[contains(@class, "Text-root")]/text()'
       content: '//div[@class="ArticleView-container"]/div[contains(@class, "ArticleView-block")]/div[contains(@class, "Text-root")]//p[not(@class)]/text()'
       images: '//div[@class="ArticleView-container"]/div/div[@class="ArticleView-coverWrap"]/figure[@class="Cover-root"]/div[@class="Cover-image"]/img[contains(@class, "Picture-root")]/@src'

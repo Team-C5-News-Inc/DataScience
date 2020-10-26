@@ -7,3 +7,4 @@ lxml
 pandas
 urllib3
 pymongo
+lzma

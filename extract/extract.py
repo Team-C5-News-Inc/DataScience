@@ -22,7 +22,7 @@ def _replacer(objs):
     news_object = []
     for obj in objs:
         obj = obj.replace('\"', '')
-        obj = obj.replace('\xa0', ' ')
+        obj = obj.replace('\xa0', '')
         obj = obj.replace('\n', '')
         obj = obj.replace('\t', '')
         obj = obj.replace('\r', '')
@@ -204,7 +204,7 @@ def _articles_and_categories_extraction(host, article_url, iterator):
     except (HTTPError, MaxRetryError) as e:
         logger.warning('Error while fetching article', exc_info=False)
     
-    return data, category.lower()
+    return data, category.capitalize()
 
 
 if __name__ == '__main__':
@@ -221,7 +221,7 @@ if __name__ == '__main__':
     categories = []
     
 
-    for i in range(2,3):
+    for i in range(7):
         host = config()['news_sites'][i]['url']
         logger.info(f'Begining scraper for {host}')
         categories_urls = _categories_urls_extraction(host, i)
@@ -229,13 +229,9 @@ if __name__ == '__main__':
         for article in articles_links:
             if article not in articles_recovered:
                 articles_to_scrape.append(article)
-        if len(articles_to_scrape) == 0:
-            logger.info(f'There are no new articles to scrape in {host}')
-        for article in articles_to_scrape:
-            articles, category = _articles_and_categories_extraction(host, article, i)
-            data['articles'].append(articles)
-            categories.append(category)
-    
+                articles, category = _articles_and_categories_extraction(host, article, i)
+                data['articles'].append(articles)
+                categories.append(category)
     categories = list(set(categories))
     for category in categories:
             if category not in categories_recovered:
