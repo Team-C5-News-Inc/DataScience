@@ -11,15 +11,18 @@ def _extract():
     subprocess.run(['python3', 'extract.py'], cwd='./extract')
 
     subprocess.run(['find', '.', '-name', '{}'.format('articles.csv'), '-exec', 'mv', '{}', '../transform/{}'.format('articles.csv'), ';'], cwd='./extract')
-    subprocess.run(['find', '.', '-name', '{}'.format('articles.csv'), '-exec', 'mv', '{}', '../transform/{}'.format('articles.csv'), ';'], cwd='./extract')
+    subprocess.run(['find', '.', '-name', '{}'.format('categories.csv'), '-exec', 'mv', '{}', '../transform/{}'.format('categories.csv'), ';'], cwd='./extract')
 
-    subprocess.run(['find', '.', '-name', '{}'.format('categories.csv'), '-exec', 'mv', '{}', '../transform/{}'.format('categories.csv'), ';'], cwd='./extract')
-    subprocess.run(['find', '.', '-name', '{}'.format('categories.csv'), '-exec', 'mv', '{}', '../transform/{}'.format('categories.csv'), ';'], cwd='./extract')
-        
+def _transform():
+    logger.info('Starting transformation process...')
+    subprocess.run(['python3', 'transform.py'], cwd='./transform')
+
+    subprocess.run(['find', '.', '-name', '{}'.format('clean_articles.csv'), '-exec', 'mv', '{}', '../load/{}'.format('clean_articles.csv'), ';'], cwd='./transform')
+    subprocess.run(['find', '.', '-name', '{}'.format('clean_categories.csv'), '-exec', 'mv', '{}', '../load/{}'.format('clean_categories.csv'), ';'], cwd='./transform')
 
 def main():
     _extract()
-
+    _transform()
 
 if __name__ == '__main__':
     main()

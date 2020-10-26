@@ -1,5 +1,4 @@
 autopep8
-scrapy
 pyyaml
 bs4
 requests
@@ -7,4 +6,4 @@ lxml
 pandas
 urllib3
 pymongo
-lzma
+dnspython
