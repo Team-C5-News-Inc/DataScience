@@ -27,7 +27,7 @@ def _replacer(objs):
         obj = obj.replace('\t', '')
         obj = obj.replace('\r', '')
         obj = obj.replace('-', ' ')
-        news_object.append(obj)
+        news_object.append(obj.encode('utf-8').decode('ascii', 'ignore'))
     return news_object
 
 # Test para construir enlaces.
@@ -71,9 +71,9 @@ def _categories_urls_extraction(host, iterator):
         else:
             # In case if the server is down
             raise ValueError(f'Error {news_page.status_code}')
-            logger.info(f'Server error: {news_page.status_code}')
+            logger.warninr(f'Server error: {news_page.status_code}')
     except ValueError as e:
-        logger.info(f'Error scraping {host}')
+        logger.info(f'Error: {e}')
     return list(set(links_categories))
 
 # Test para verificar que no sea none
@@ -102,9 +102,9 @@ def _articles_urls_extraction(host, category_list, iterator):
             else:
                 # In case if the server is down
                 raise ValueError(f'Error {category_page.status_code}')
-                logger.info(f'Server error: {category_page.status_code}')
+                logger.warning(f'Server error: {category_page.status_code}')
         except ValueError as e:
-            logger.info(f'Error scraping {host}')
+            logger.info(f'Error: {e}')
         
     return list(set(article_list))
 
@@ -200,7 +200,7 @@ def _articles_and_categories_extraction(host, article_url, iterator):
             category = "".join(categories)
         else:
             raise ValueError(f'Error.')
-            logger.info(f'{article_url}: {article_page.status_code}')
+            logger.warning(f'{article_url}: {article_page.status_code}')
     except (HTTPError, MaxRetryError) as e:
         logger.warning('Error while fetching article', exc_info=False)
     
@@ -221,7 +221,7 @@ if __name__ == '__main__':
     categories = []
     
 
-    for i in range(7):
+    for i in range(6,7):
         host = config()['news_sites'][i]['url']
         logger.info(f'Begining scraper for {host}')
         categories_urls = _categories_urls_extraction(host, i)
