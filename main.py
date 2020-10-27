@@ -20,10 +20,14 @@ def _transform():
     subprocess.run(['find', '.', '-name', '{}'.format('clean_articles.csv'), '-exec', 'mv', '{}', '../load/{}'.format('clean_articles.csv'), ';'], cwd='./transform')
     subprocess.run(['find', '.', '-name', '{}'.format('clean_categories.csv'), '-exec', 'mv', '{}', '../load/{}'.format('clean_categories.csv'), ';'], cwd='./transform')
 
+def _load():
+    logger.info('Starting load process...')
+    subprocess.run(['python3', 'load.py'], cwd='./load')
+
 def main():
     _extract()
     _transform()
+    _load()
 
 if __name__ == '__main__':
     main()
-    

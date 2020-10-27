@@ -91,7 +91,7 @@ news_sites:
       title: '//div[@class="ArticleView-container"]/div/div[@class="ArticleView-title"]/h1/text()'
       subtitle: '//div[@class="ArticleView-container"]/div/div[@class="ArticleView-summary"]/div[contains(@class, "Text-root")]/text()'
       content: '//div[@class="ArticleView-container"]/div[contains(@class, "ArticleView-block")]/div[contains(@class, "Text-root")]//p[not(@class)]/text()'
-      images: '//div[@class="ArticleView-container"]/div/div[@class="ArticleView-coverWrap"]/figure[@class="Cover-root"]/div[@class="Cover-image"]/img[contains(@class, "Picture-root")]/@src'
+      images: '//div[@class="ArticleView-coverWrap"]/figure[@class="Cover-root"]/div/picture/img/@src'
       category_long: '//div[contains(@class, "Section-container")]/div[contains(@class, "Section-block")]/div[@class="Breadcrumbs-root"]/span[last()]/a/span/text()'
       tags: '//div[@class="ArticleView-container"]/div[contains(@class, "ArticleView-block")]/div[@class="ArticleView-tags"]/div[contains(@class, "Tags-root")]/ul//li/a/text()'
       author: '//header[@id="header-root"]/div[@class="Header-nav"]/nav[@class="MainMenu-root"]/div[last()]/a/text()'

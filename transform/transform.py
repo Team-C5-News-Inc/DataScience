@@ -15,6 +15,10 @@ def _delete_empty_titles_and_bodies(df):
 
     return df
 
+def _clean_datetime_for_articles(df):
+    for i in range(len(df)):
+        print(df.loc[i, 'publication_date'])
+    return df
 
 def _delete_first_space_categories(df_categories):
     df_categories = df_categories.dropna()
@@ -31,6 +35,7 @@ def main(df, df_categories):
     df = pd.read_csv(df)
     logger.info('Starting cleaning process for articles.')
     df = _delete_empty_titles_and_bodies(df)
+    df = _clean_datetime_for_articles(df)
     df.to_csv('clean_articles.csv', index = False)
     logger.info('Cleaning process for articles completed.')
     df_cat = pd.read_csv(df_categories)
