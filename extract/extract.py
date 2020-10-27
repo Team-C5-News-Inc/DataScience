@@ -19,16 +19,16 @@ data = {}
 
 # Test para escapar comillas dobles.
 def _replacer(objs):
-    news_object = []
-    for obj in objs:
-        obj = obj.replace('\"', '')
-        obj = obj.replace('\xa0', '')
-        obj = obj.replace('\n', '')
-        obj = obj.replace('\t', '')
-        obj = obj.replace('\r', '')
-        obj = obj.replace('-', ' ')
-        news_object.append(obj.encode('utf-8').decode('ascii', 'ignore'))
-    return news_object
+    # news_object = []
+    for obj in range(len(objs)):
+        objs[obj] = objs[obj].replace('"', '')
+        objs[obj] = objs[obj].replace('\xa0', '')
+        objs[obj] = objs[obj].replace('\n', '')
+        objs[obj] = objs[obj].replace('\t', '')
+        objs[obj] = objs[obj].replace('\r', '')
+        objs[obj] = objs[obj].replace('-', ' ')
+        #news_object.append(obj.encode('utf-8').decode('ascii', 'ignore'))
+    return objs #news_object
 
 # Test para construir enlaces.
 def _build_link(host, link):
@@ -221,7 +221,7 @@ if __name__ == '__main__':
     categories = []
     
 
-    for i in range(7):
+    for i in range(6,7):
         host = config()['news_sites'][i]['url']
         logger.info(f'Begining scraper for {host}')
         categories_urls = _categories_urls_extraction(host, i)
