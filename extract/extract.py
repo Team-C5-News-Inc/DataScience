@@ -221,7 +221,7 @@ if __name__ == '__main__':
     categories = []
     
 
-    for i in range(6,7):
+    for i in range(7):
         host = config()['news_sites'][i]['url']
         logger.info(f'Begining scraper for {host}')
         categories_urls = _categories_urls_extraction(host, i)

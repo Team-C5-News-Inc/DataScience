@@ -15,6 +15,13 @@ def _delete_empty_titles_and_bodies(df):
 
     return df
 
+def _clean_datetime(df):
+    for dt in range(len(df)):
+        df['publication_date'][dt] = df['publication_date'][dt].replace('\'','')
+        df['publication_date'][dt] = df['publication_date'][dt].replace('\[','')
+        df['publication_date'][dt] = df['publication_date'][dt].replace('\]','')
+    df['publication_date'] = pd.to_datetime(df['publication_date'])
+    return df
 
 def _delete_first_space_categories(df_categories):
     df_categories = df_categories.dropna()
@@ -31,13 +38,15 @@ def main(df, df_categories):
     df = pd.read_csv(df)
     logger.info('Starting cleaning process for articles.')
     df = _delete_empty_titles_and_bodies(df)
-    df.to_csv('clean_articles.csv', index = False)
-    logger.info('Cleaning process for articles completed.')
+    df = _clean_datetime(df)
+    # df.to_csv('clean_articles.csv', index = False)
+    print(df['publication_date'][0])
+    """ logger.info('Cleaning process for articles completed.')
     df_cat = pd.read_csv(df_categories)
     logger.info('Starting cleaning process for categories.')
     df_cat = _delete_first_space_categories(df_cat)
     df_cat.to_csv('clean_categories.csv', index = False)
-    logger.info('Cleaning process for categories completed.')
+    logger.info('Cleaning process for categories completed.') """
 
 if __name__ == "__main__":
     main('articles.csv', 'categories.csv')
