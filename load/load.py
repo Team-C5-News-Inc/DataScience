@@ -16,22 +16,22 @@ data_categories = []
 
 def _clean_body(df):
     for body in range(len(df)):
-        df['body'].str.split("',")
-    for body in range(len(df)):
-        df['body'][body] = df['body'][body].str.replace('[', '')
-        df['body'][body] = df['body'][body].str.replace('\'', '')
-        df['body'][body] = df['body'][body].str.replace(']', '')
+        df['body'][body] = df['body'][body].split("',")
+        for item in range(len(df['body'][body])):
+            df['body'][body][item] = df['body'][body][item].replace('[', '')
+            df['body'][body][item] = df['body'][body][item].replace(']', '')
+            df['body'][body][item] = df['body'][body][item].replace('\'', '')
+       
     return df
 
 def _clean_tags(df):
-    df['tags'].fillna('[]')
-    for tag in range(len(df['tags'])):
-        df['tags'].str.split("',")
+    df['tags'] = df['tags'].fillna('[]')
     for tag in range(len(df)):
+        df['tags'][tag] = df['tags'][tag].split("',")
         for item in range(len(df['tags'][tag])):
-            df['tags'][tag][item] = df['tags'][tag][item].str.replace('[', '')
-            df['tags'][tag][item] = df['tags'][tag][item].str.replace('\'', '')
-            df['tags'][tag][item] = df['tags'][tag][item].str.replace(']', '')
+            df['tags'][tag][item] = df['tags'][tag][item].replace('[', '')
+            df['tags'][tag][item] = df['tags'][tag][item].replace('\'', '')
+            df['tags'][tag][item] = df['tags'][tag][item].replace(']', '')
     return df
 
 
@@ -40,22 +40,14 @@ def _string_to_datetime(df):
     return df
 
 def _clean_images_list(df):
-    df['images'].fillna('[]')
-    df['images']= df['images'].str.split(",")
-    for img in range(df['images']):
-        df['images'][img].str.replace("'", "")
+    df['images'] = df['images'].fillna('[]')
+    
+    for img in range(len(df['images'])):
+        df['images'][img] = df['images'][img].split(',')
+        for item in range(len(df['images'][img])):
+            df['images'][img][item] = df['images'][img][item].replace('\'', "")
             
     return df
-    # df['images'].fillna('[]')
-    # for img in range(len(df)):
-    #     df['images'].str.split("',")
-    #     for item in range(len(df['images'][img])):
-    #         df['images'][img][item] = df['images'][img][item].replace('"', '')
-    #         df['images'][img][item] = df['images'][img][item].replace("'", '')
-    #         df['images'][img][item] = df['images'][img][item].replace('[', '')
-    #         df['images'][img][item] = df['images'][img][item].replace(']', '')
-            
-    # return df
 
 
 def _cleaning_vanguardia_images(df_articles):
@@ -67,15 +59,15 @@ def _cleaning_vanguardia_images(df_articles):
 
 df_articles = pd.read_csv('clean_articles.csv')
 df_articles = _clean_body(df_articles)
-#df_articles = _clean_tags(df_articles)
+df_articles = _clean_tags(df_articles)
 df_articles = _string_to_datetime(df_articles)
 df_articles = _clean_images_list(df_articles)
 df_articles = _cleaning_vanguardia_images(df_articles)
-# df_categories = pd.read_csv('clean_categories.csv')
+df_categories = pd.read_csv('clean_categories.csv')
 
-# logger.info(f'Accessing to collections.')
-# collection_articles = db['articles']
-# collection_categories = db['categories']
+logger.info(f'Accessing to collections.')
+collection_articles = db['articles']
+collection_categories = db['categories']
 
 # logger.info(f'Parsing article data.')
 # for article in range(len(df_articles)):
