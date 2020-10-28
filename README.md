@@ -1,8 +1,3 @@
----
-title: 'C5-Notices -- Data Science'
-disqus: hackmd
----
-
 # NEWS INC - SCRAPPER
 
 
@@ -10,6 +5,7 @@ disqus: hackmd
 
 * [Summary](#summary)
 * [Concerning of Data Science](#concerning-of-data-dcience)
+* [How to Use it](#how-to-use-it)
 ---
 
 # Summary
@@ -28,3 +24,25 @@ This is the scrapper for the project News Inc, for Platzi Master. News Inc was d
 
 
 # Concerning of Data Science.
+
+Data Science use 100% python to program the scrapper.
+
+[imagen bien cool del logo de python]
+
+The libraries used to program the scraper are:
+* pyymaml: To save the data configuration in a config.yaml.
+* requests: To request information about a web-page.
+* lxml: It's the most rich feature to process xml and html data. In this case, the xpath to the information.
+* pandas: The dataset is build and cleaned in this library.
+* urllib3: For this, we used the methods exception, to be specific MaxRetryError.
+* logging: To keep a log for what the scraper is doing.
+* re: We use regular expressions to know if a url is built properly, or if a url is a pdf.
+* pymongo: It's the official library for MongoDB, with this one, we can connect to the database and send the data scraped.
+
+# HOW TO USE IT?
+
+It's quite easy, just follow the next steps.
+1. Make sure you have a virtual environment. `python3 -m venv venv`.
+2. Activate the virtual environment. `source venv/bin/activate`.
+3. Install the dependencies in requirements.txt. `pip3 install -r requirements.txt`.
+4. Once the dependencies are installed, you can run the scraper. `python3 main.py`.

@@ -19,16 +19,16 @@ data = {}
 
 # Test para escapar comillas dobles.
 def _replacer(objs):
-    # news_object = []
-    for obj in range(len(objs)):
-        objs[obj] = objs[obj].replace('"', '')
-        objs[obj] = objs[obj].replace('\xa0', '')
-        objs[obj] = objs[obj].replace('\n', '')
-        objs[obj] = objs[obj].replace('\t', '')
-        objs[obj] = objs[obj].replace('\r', '')
-        objs[obj] = objs[obj].replace('-', ' ')
-        #news_object.append(obj.encode('utf-8').decode('ascii', 'ignore'))
-    return objs #news_object
+    news_object = []
+    for obj in objs:
+        obj = obj.replace('\"', '')
+        obj = obj.replace('\xa0', '')
+        obj = obj.replace('\n', '')
+        obj = obj.replace('\t', '')
+        obj = obj.replace('\r', '')
+        obj = obj.replace('-', ' ')
+        news_object.append(obj)
+    return news_object
 
 # Test para construir enlaces.
 def _build_link(host, link):
@@ -70,8 +70,8 @@ def _categories_urls_extraction(host, iterator):
                 links_categories.append(_build_link(host, link))
         else:
             # In case if the server is down
+            logger.warning(f'Server error: {news_page.status_code}')
             raise ValueError(f'Error {news_page.status_code}')
-            logger.warninr(f'Server error: {news_page.status_code}')
     except ValueError as e:
         logger.info(f'Error: {e}')
     return list(set(links_categories))
@@ -101,8 +101,8 @@ def _articles_urls_extraction(host, category_list, iterator):
                     
             else:
                 # In case if the server is down
-                raise ValueError(f'Error {category_page.status_code}')
                 logger.warning(f'Server error: {category_page.status_code}')
+                raise ValueError(f'Error {category_page.status_code}')
         except ValueError as e:
             logger.info(f'Error: {e}')
         
@@ -193,14 +193,14 @@ def _articles_and_categories_extraction(host, article_url, iterator):
                 'category_long': category_long,
                 'tags': tags,
                 'author': author,
-                'publication_date': parsed.xpath(publication_date_query),
+                'publication_date': publication_date,
                 'news_url': article_url,
                 'host': host
             }
             category = "".join(categories)
         else:
-            raise ValueError(f'Error.')
             logger.warning(f'{article_url}: {article_page.status_code}')
+            raise ValueError(f'Error.')
     except (HTTPError, MaxRetryError) as e:
         logger.warning('Error while fetching article', exc_info=False)
     
@@ -221,7 +221,7 @@ if __name__ == '__main__':
     categories = []
     
 
-    for i in range(6,7):
+    for i in range(2,3):
         host = config()['news_sites'][i]['url']
         logger.info(f'Begining scraper for {host}')
         categories_urls = _categories_urls_extraction(host, i)
@@ -244,7 +244,7 @@ if __name__ == '__main__':
         writer.writerows(data['articles'])
         f.close()
 
-    with open('categories.csv', 'a+') as f:
+    with open('categories.csv', 'w+') as f:
         writer = csv.DictWriter(f, fieldnames=['categories'])
         writer.writeheader()
         writer.writerows(data['categories'])

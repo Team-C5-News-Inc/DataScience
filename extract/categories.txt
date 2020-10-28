@@ -1,8 +1,5 @@
-Actualidad
-Viral
-Actualidad
-Viral
-Viral
-Actualidad
-Viral
-Actualidad
+Tendencias
+Economia
+Ciencia y tecnologia
+Deportes
+Opinion
