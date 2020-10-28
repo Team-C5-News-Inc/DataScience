@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import os.path
 import requests
 import lxml.html as html
@@ -221,7 +223,7 @@ if __name__ == '__main__':
     categories = []
     
 
-    for i in range(2,3):
+    for i in range(1):
         host = config()['news_sites'][i]['url']
         logger.info(f'Begining scraper for {host}')
         categories_urls = _categories_urls_extraction(host, i)
@@ -236,15 +238,15 @@ if __name__ == '__main__':
     for category in categories:
             if category not in categories_recovered:
                 data['categories'].append({'categories':category})
-
-    with open('articles.csv', 'w+') as f:
+    
+    with open('articles.csv', 'w+', encoding='utf-8') as f:
         fieldnames = ['title', 'subtitle', 'body', 'images', 'category_long', 'tags', 'author','publication_date', 'news_url', 'host']
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(data['articles'])
         f.close()
 
-    with open('categories.csv', 'w+') as f:
+    with open('categories.csv', 'w+', encoding='utf-8') as f:
         writer = csv.DictWriter(f, fieldnames=['categories'])
         writer.writeheader()
         writer.writerows(data['categories'])

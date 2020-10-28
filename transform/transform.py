@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import os.path
 import pandas as pd
 import logging
@@ -16,22 +19,20 @@ def _delete_empty_titles_and_bodies(df):
     return df
 
 def _clean_df_string(df):
-    for item in range(len(df)):
-        df['title'][item] = df['title'][item][2:-2]
-        df['subtitle'][item] = df['subtitle'][item][2:-2]
-        df['author'][item] = df['author'][item][2:-2]
-        df['category_long'][item] = df['category_long'][item][2:-2]
-        df['body'][item] = df['body'][item][2:-2]
-        df['tags'][item] = df['tags'][item][2:-2]
-        df['images'][item] = df['images'][item][2:-2]
+    df['title'] = df['title'].str[2:-2]
+    df['subtitle'] = df['subtitle'].str[2:-2]
+    df['author'] = df['author'].str[2:-2]
+    df['category_long'] = df['category_long'].str[2:-2]
+    df['body'] = df['body'].str[2:-2]
+    df['tags'] = df['tags'].str[2:-2]
+    df['images'] = df['images'].str[2:-2]
 
     return df
 
 def _clean_datetime(df):
-    for dt in range(len(df)):
-        df['publication_date'][dt] = df['publication_date'][dt].replace('\'','')
-        df['publication_date'][dt] = df['publication_date'][dt].replace('[','')
-        df['publication_date'][dt] = df['publication_date'][dt].replace(']','')
+    df['publication_date'] = df['publication_date'].str.replace('\'','')
+    df['publication_date'] = df['publication_date'].str.replace('[','')
+    df['publication_date'] = df['publication_date'].str.replace(']','')
     df['publication_date'] = pd.to_datetime(df['publication_date'])
     return df
 
@@ -45,8 +46,8 @@ def _delete_first_space_categories(df_categories):
         df_categories.loc[category] = df_categories.loc[category, 'categories'].capitalize()
     return df_categories
 
-def main(df, df_categories):
-    df = pd.read_csv(df)
+def main(df_articles, df_categories):
+    df = pd.read_csv(df_articles)
     logger.info('Starting cleaning process for articles.')
     df = _delete_empty_titles_and_bodies(df)
     df = _clean_datetime(df)
