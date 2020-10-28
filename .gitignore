@@ -1,6 +1,7 @@
 */*.csv
-*/*.txt
 */*.ipynb
+
+load/client.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

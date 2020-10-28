@@ -1,8 +1,0 @@
-pyyaml
-requests
-lxml
-pandas
-urllib3
-pymongo
-dnspython
-win_unicode_console
