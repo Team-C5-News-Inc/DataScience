@@ -2,7 +2,7 @@ import pymongo
 import logging
 import pandas as pd
 import re
-import os.path
+import numpy as np
 from client import client
 logging.basicConfig(level=logging.INFO)
 
@@ -15,28 +15,30 @@ data_categories = []
 
 
 def _clean_body(df):
-    for body in range(len(df)):
-        df['body'][body] = df['body'][body].split("',")
-        for item in range(len(df['body'][body])):
-            df['body'][body][item] = df['body'][body][item].replace('[', '')
-            df['body'][body][item] = df['body'][body][item].replace(']', '')
-            df['body'][body][item] = df['body'][body][item].replace('\'', '')
-       
+    df['body'] = df['body'].str.replace("',", "---")
+    df['body'] = df['body'].str.replace("'", '')
+    df['body'] = df['body'].str.replace("[", '')
+    df['body'] = df['body'].str.replace("]", '')
+    df['body'] = df['body'].str.split("---")
+    #for body in range(len(df)):
+        
+        
+        
     return df
 
 def _clean_tags(df):
-    df['tags'] = df['tags'].fillna('[]')
-    for tag in range(len(df)):
-        df['tags'][tag] = df['tags'][tag].split("',")
-        for item in range(len(df['tags'][tag])):
-            df['tags'][tag][item] = df['tags'][tag][item].replace('[', '')
-            df['tags'][tag][item] = df['tags'][tag][item].replace('\'', '')
-            df['tags'][tag][item] = df['tags'][tag][item].replace(']', '')
+    df['tags'] = df['tags'].fillna(method = 'bfill')
+    df['tags'] = df['tags'].str.replace('\',', '---')
+    df['tags'] = df['tags'].str.replace('[', '')
+    df['tags'] = df['tags'].str.replace('\'', '')
+    df['tags'] = df['tags'].str.replace(']', '')
+    df['tags'] = df['tags'].str.split("---")
+            
     return df
 
 
 def _clean_images_list(df):
-    df['images'] = df['images'].fillna('[]')
+    df['images'] = df['images'].fillna('')
     
     for img in range(len(df['images'])):
         df['images'][img] = df['images'][img].split(',')
@@ -56,17 +58,22 @@ def _cleaning_vanguardia_images(df_articles):
 
 def _clean_empty_spaces(df):
     df['subtitle'] = df['subtitle'].fillna('')
-    df['category_long'] = df['category_long'].fillna('')
-    df['author'] = df['author'].fillna('')
+    df['category_long'] = df['category_long'].fillna(method = 'bfill')
+    df['author'].fillna(df['host'], inplace = True)
+    
+    return df
 
-
+def _string_to_datetime(df):
+    df['publication_date'] = pd.to_datetime(df['publication_date'])
     return df
 
 df_articles = pd.read_csv('clean_articles.csv')
-df_articles = _clean_body(df_articles)
 df_articles = _clean_tags(df_articles)
+df_articles = _clean_body(df_articles)
 df_articles = _clean_images_list(df_articles)
 df_articles = _cleaning_vanguardia_images(df_articles)
+df_articles = _clean_empty_spaces(df_articles)
+df_articles = _string_to_datetime(df_articles)
 df_categories = pd.read_csv('clean_categories.csv')
 
 logger.info(f'Accessing to collections.')
@@ -93,14 +100,13 @@ for category in range(len(df_categories)):
 
 
 logger.info(f'Saving data into database.')
-
-if len(data_articles) > 0:
+if data_articles:
     collection_articles.insert_many(data_articles)
-
-if len(data_categories) > 0:
+    logger.info(f'{len(data_articles)} articles inserted into database.')
+if data_categories:
     collection_categories.insert_many(data_categories)
+    logger.info(f'{len(data_categories)} categories inserted into database.')
 
 logger.info(f'Closing database {db.name}.')
 
 client.close()
-
