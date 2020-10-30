@@ -2,7 +2,7 @@ import pymongo
 import logging
 import pandas as pd
 import re
-import numpy as np
+import os.path
 from client import client
 logging.basicConfig(level=logging.INFO)
 
@@ -35,10 +35,6 @@ def _clean_tags(df):
     return df
 
 
-def _string_to_datetime(df):
-    df['publication_date'] = pd.to_datetime(df['publication_date'])
-    return df
-
 def _clean_images_list(df):
     df['images'] = df['images'].fillna('[]')
     
@@ -57,10 +53,18 @@ def _cleaning_vanguardia_images(df_articles):
                 df_articles['images'][df][url] = "".join(re.findall(r'[\w]{3}\.[\w\-\.\/]+\.[\w]{3}', df_articles['images'][df][url]))
     return df_articles
 
+
+def _clean_empty_spaces(df):
+    df['subtitle'] = df['subtitle'].fillna('')
+    df['category_long'] = df['category_long'].fillna('')
+    df['author'] = df['author'].fillna('')
+
+
+    return df
+
 df_articles = pd.read_csv('clean_articles.csv')
 df_articles = _clean_body(df_articles)
 df_articles = _clean_tags(df_articles)
-df_articles = _string_to_datetime(df_articles)
 df_articles = _clean_images_list(df_articles)
 df_articles = _cleaning_vanguardia_images(df_articles)
 df_categories = pd.read_csv('clean_categories.csv')
@@ -89,8 +93,12 @@ for category in range(len(df_categories)):
 
 
 logger.info(f'Saving data into database.')
-collection_articles.insert_many(data_articles)
-collection_categories.insert_many(data_categories)
+
+if len(data_articles) > 0:
+    collection_articles.insert_many(data_articles)
+
+if len(data_categories) > 0:
+    collection_categories.insert_many(data_categories)
 
 logger.info(f'Closing database {db.name}.')
 

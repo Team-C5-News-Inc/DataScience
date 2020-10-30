@@ -1,6 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
+import datetime
 import os.path
 import pandas as pd
 import logging
@@ -9,6 +7,7 @@ import datetime
 logging.basicConfig(level=logging.INFO)
 
 logger = logging.getLogger(__name__)
+today = datetime.datetime.today()
 
 def _delete_empty_titles_and_bodies(df):
     df = df.dropna()
@@ -33,6 +32,8 @@ def _clean_datetime(df):
     df['publication_date'] = df['publication_date'].str.replace('\'','')
     df['publication_date'] = df['publication_date'].str.replace('[','')
     df['publication_date'] = df['publication_date'].str.replace(']','')
+    df['publication_date'] = df['publication_date'].fillna(today)
+
     df['publication_date'] = pd.to_datetime(df['publication_date'])
     return df
 

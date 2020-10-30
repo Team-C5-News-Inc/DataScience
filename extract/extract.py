@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 import os.path
 import requests
 import lxml.html as html
@@ -42,7 +40,7 @@ def _build_link(host, link):
     else:
         return f'{host}/{link}'
 
-def _recover_articles_urls(file):
+def _recover_text_file(file):
     url = []
     file = open(file, 'r')
     for line in file:
@@ -216,9 +214,9 @@ if __name__ == '__main__':
     articles_recovered = []
     categories_recovered = []
     if os.path.isfile('urls.txt'):
-        articles_recovered = _recover_articles_urls('urls.txt')
+        articles_recovered = _recover_text_file('urls.txt')
     if os.path.isfile('categories.txt'):
-        categories_recovered = _recover_articles_urls('categories.txt')
+        categories_recovered = _recover_text_file('categories.txt')
     articles_to_scrape = []
     categories = []
     
@@ -239,24 +237,24 @@ if __name__ == '__main__':
             if category not in categories_recovered:
                 data['categories'].append({'categories':category})
     
-    with open('articles.csv', 'w+', encoding='utf-8') as f:
+    with open('articles.csv', 'w+', encoding = "utf-8") as f:
         fieldnames = ['title', 'subtitle', 'body', 'images', 'category_long', 'tags', 'author','publication_date', 'news_url', 'host']
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(data['articles'])
         f.close()
 
-    with open('categories.csv', 'w+', encoding='utf-8') as f:
+    with open('categories.csv', 'w+', encoding = "utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=['categories'])
         writer.writeheader()
         writer.writerows(data['categories'])
 
-    with open('urls.txt', 'a+') as f:
+    with open('urls.txt', 'a+', encoding = "utf-8") as f:
         for article in articles_to_scrape:
             f.write(article + '\n')
         f.close
     
-    with open('categories.txt', 'a+') as f:
+    with open('categories.txt', 'a+', encoding = "utf-8") as f:
         for category in categories:
             f.write(category + '\n')
         f.close

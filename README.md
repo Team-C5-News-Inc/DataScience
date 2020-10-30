@@ -1,6 +1,5 @@
 # NEWS INC - SCRAPPER
 
-
 ## Table of Contents
 
 * [Summary](#summary)
@@ -27,7 +26,7 @@ This is the scrapper for the project News Inc, for Platzi Master. News Inc was d
 
 Data Science use 100% python to program the scrapper.
 
-[imagen bien cool del logo de python]
+![Logo](https://www.maestrosdelweb.com/images/2012/10/python-logo-master-flat1.png)
 
 The libraries used to program the scraper are:
 * pyymaml: To save the data configuration in a config.yaml.
