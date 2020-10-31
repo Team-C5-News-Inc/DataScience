@@ -99,7 +99,7 @@ for category in range(len(df_categories)):
     data_categories.append({'categories':df_categories['categories'][category]})
 
 
-logger.info(f'Saving data into database.')
+logger.info(f'Attempting to save data into database.')
 if data_articles:
     collection_articles.insert_many(data_articles)
     logger.info(f'{len(data_articles)} articles inserted into database.')
