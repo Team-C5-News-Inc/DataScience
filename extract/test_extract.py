@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 HOST = ['https://www.vanguardia.com', 'https://noticias.canalrcn.com', 'https://www.ntn24.com', 'https://www.eluniversal.com.mx', 'https://www.eleconomista.com.mx', 'https://actualidad.rt.com']
 class Test_Extract(unittest.TestCase):
     # Test Build links function
-    logger.info('Starting test for the data extraction.')    
+    logger.info('Starting test for the data extraction.')
     def test_build_link(self):
         ''' Test that verifies if a link is well formed '''
         logger.info('Starting build link test')

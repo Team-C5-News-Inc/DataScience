@@ -20,9 +20,6 @@ def _clean_body(df):
     df['body'] = df['body'].str.replace("[", '')
     df['body'] = df['body'].str.replace("]", '')
     df['body'] = df['body'].str.split("---")
-    #for body in range(len(df)):
-        
-        
         
     return df
 
