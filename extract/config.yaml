@@ -42,20 +42,6 @@ news_sites:
       publication_date: '//div[@class="texto-nota"]/div[@class="row"]/div/div[@class="bloque-texto-nota"]/div[@class="date"]/span[@id="IAarticle-date"]/text()'
       categories: '//main[@class="main-nota"]/div[@class="content-nota"]/article[@class="newArticle"]/@data-article-subcategory'
   3:
-    url: https://www.ntn24.com
-    categories_links: '//nav[@class="blindBox"]/ul[@class="maintabs"]/li/a/@href'
-    articles: '//article[@class="cell"]/div/div/div[@class="txtBox"]/strong/a/@href'
-    queries:
-      title: '//div[@class="falseH1"]h1/span[@class="maintitle"]/text()'
-      subtitle: '//div[@class="falseH1"]h1/span[@class="maintitle"]/text()'
-      content: '//div[@class="artBody"]//p/text()'
-      images: '//img[@itemprop="image"]/@src'
-      category_long: '//meta[@itemprop="articleSection"]/@content'
-      tags: '//div[@class="bloque-tag"]/span/a/text()'
-      author: '//div[@class="author  anonim"]/span[@itemprop="author"]/em[@itemprop="name"]/text()'
-      publication_date: '//meta[@itemprop="dateModified"]/@content'
-      categories: '//meta[@itemprop="articleSection"]/@content'
-  4:
     url: https://www.eluniversal.com.mx
     categories_links: '//div[@id="menu-navegacion_Noticias"]/ul/li/a/@href'
     articles: '//article[contains(@class,"type-article")]/a/@href'
@@ -69,7 +55,7 @@ news_sites:
       author: '//div[contains(@class, "DatosArticulo")]/div/span[@class="ce12-DatosArticulo_autor"]/text()'
       publication_date: '//meta[@class="article:published_time"]/@content'
       categories: '//div[contains(@class, "DatosArticulo")]/div/a[1]/text()'
-  5:
+  4:
     url: https://www.eleconomista.com.mx
     categories_links: '//nav[@id="main-nav"]/div[@class="left-part"]/ul/li/a/@href'
     articles: '//div[contains(@class, "entry-box")]/article/div[@class="entry-data"]/h3/a/@href'
@@ -83,7 +69,7 @@ news_sites:
       author: '//div[@class="entry"]/div[contains(@class, "nota-autor")]/address/div[@class="author-data"]/text()'
       publication_date: '//div[@class="author-data"]/span[@class="article-date"]/time[@class="entry-time"]/@datetime'
       categories: '//div[@class="entry"]/div[contains(@class, "entry-top")]/div[@class="title-top"]/a[last()]/text()'
-  6:
+  5:
     url: https://actualidad.rt.com
     categories_links: '//nav[@class="MainMenu-root"]//div[@class="MainMenu-itemMenu"]/a/@href'
     articles: '//div[@class="Card-content"]/div[@class="Card-title"]/div/a/@href'

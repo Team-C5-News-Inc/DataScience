@@ -18,7 +18,7 @@ config = config
 data = {}
 
 # Test para escapar comillas dobles.
-def _replacer(objs):
+def replacer(objs):
     news_object = []
     for obj in objs:
         obj = obj.replace('\"', '')
@@ -31,7 +31,7 @@ def _replacer(objs):
     return news_object
 
 # Test para construir enlaces.
-def _build_link(host, link):
+def build_link(host, link):
     ''' Function that builds properly a url '''
     if is_well_formed_link.match(link):
         return link
@@ -40,7 +40,7 @@ def _build_link(host, link):
     else:
         return f'{host}/{link}'
 
-def _recover_text_file(file):
+def recover_text_file(file):
     url = []
     file = open(file, 'r')
     for line in file:
@@ -51,7 +51,7 @@ def _recover_text_file(file):
     return url
 
 # Test para verificar que sea distinto a none
-def _categories_urls_extraction(host, iterator):
+def categories_urls_extraction(host, iterator):
     ''' Function that returns two list one for the category links and the other for the category names '''
     logger.info(f'Extracting category list for {host}')
     # Variables definition
@@ -67,7 +67,7 @@ def _categories_urls_extraction(host, iterator):
             # Extracting the links and the names for each category
             categories_tmp = parsed.xpath(categories_links)
             for link in categories_tmp:
-                links_categories.append(_build_link(host, link))
+                links_categories.append(build_link(host, link))
         else:
             # In case if the server is down
             logger.warning(f'Server error: {news_page.status_code}')
@@ -77,7 +77,7 @@ def _categories_urls_extraction(host, iterator):
     return list(set(links_categories))
 
 # Test para verificar que no sea none
-def _articles_urls_extraction(host, category_list, iterator):
+def articles_urls_extraction(host, category_list, iterator):
     ''' Function that extracts the urls for each category, and returns it in a list. '''
     # Variables definition
     article_link = config()['news_sites'][iterator]['articles']
@@ -94,10 +94,10 @@ def _articles_urls_extraction(host, category_list, iterator):
                 # Extracting the article links for each category
                 article_list_tmp = parsed.xpath(article_link)
                 for article in article_list_tmp:
-                    if is_pdf.match(_build_link(host, article)):
+                    if is_pdf.match(build_link(host, article)):
                         continue
                     else:
-                        article_list.append(_build_link(host, article))
+                        article_list.append(build_link(host, article))
                     
             else:
                 # In case if the server is down
@@ -109,7 +109,7 @@ def _articles_urls_extraction(host, category_list, iterator):
     return list(set(article_list))
 
 # Test para verificar titulo, contenido, fecha, url y categoría
-def _articles_and_categories_extraction(host, article_url, iterator):
+def articles_and_categories_extraction(host, article_url, iterator):
     ''' Function that extracts the articles for each category, and returns it in a dictionary. '''
     # Variables definition
     title_query = config()['news_sites'][iterator]['queries']['title']
@@ -132,55 +132,55 @@ def _articles_and_categories_extraction(host, article_url, iterator):
             # Extracting the content for each article
             try:
                 title = parsed.xpath(title_query)
-                title = _replacer(title)
+                title = replacer(title)
             except ValueError as e:
                 logger.warning(f'there is no title')
                 title = None
             try:
                 subtitle = parsed.xpath(subtitle_query)
-                subtitle = _replacer(subtitle)
+                subtitle = replacer(subtitle)
             except ValueError as e:
                 logger.warning('There is no subtitle')
                 subtitle = None
             try:
                 body = parsed.xpath(body_query)
-                body = _replacer(body)
+                body = replacer(body)
             except ValueError as e:
                 logger.warning(f'there is no body')
                 body = None
             try:
                 category_long = parsed.xpath(category_long_query)
-                category_long = _replacer(category_long)
+                category_long = replacer(category_long)
             except ValueError as e:
                 logger.warning(f'there is no category')
                 category_long = None
             try:
                 tags = parsed.xpath(tags_query)
-                tags = _replacer(tags)
+                tags = replacer(tags)
             except ValueError as e:
                 logger.warning(f'there is no tags')
                 tags = None
             try:
                 author = parsed.xpath(author_query)
-                author = _replacer(author)
+                author = replacer(author)
             except ValueError as e:
                 logger.warning(f'there is no author')
                 author = None
             try:
                 categories = parsed.xpath(categories_query)
-                categories = _replacer(categories)
+                categories = replacer(categories)
             except ValueError as e:
                 logger.warning(f'there are no categories')
                 categories = None
             try:
                 images = parsed.xpath(images_query)
-                images = _replacer(images)
+                images = replacer(images)
             except ValueError as e:
                 logger.warning(f'there are no images')
                 images = None
             try:
                 publication_date = parsed.xpath(publication_date_query)
-                publication_date = _replacer(publication_date)
+                publication_date = replacer(publication_date)
             except ValueError as e:
                 logger.warning(f'there is no publication date')
                 publication_date = None
@@ -214,22 +214,22 @@ if __name__ == '__main__':
     articles_recovered = []
     categories_recovered = []
     if os.path.isfile('urls.txt'):
-        articles_recovered = _recover_text_file('urls.txt')
+        articles_recovered = recover_text_file('urls.txt')
     if os.path.isfile('categories.txt'):
-        categories_recovered = _recover_text_file('categories.txt')
+        categories_recovered = recover_text_file('categories.txt')
     articles_to_scrape = []
     categories = []
     
 
-    for i in range(7):
+    for i in range(6):
         host = config()['news_sites'][i]['url']
         logger.info(f'Begining scraper for {host}')
-        categories_urls = _categories_urls_extraction(host, i)
-        articles_links = _articles_urls_extraction(host, categories_urls, i)
+        categories_urls = categories_urls_extraction(host, i)
+        articles_links = articles_urls_extraction(host, categories_urls, i)
         for article in articles_links:
             if article not in articles_recovered:
                 articles_to_scrape.append(article)
-                articles, category = _articles_and_categories_extraction(host, article, i)
+                articles, category = articles_and_categories_extraction(host, article, i)
                 data['articles'].append(articles)
                 categories.append(category)
     categories = list(set(categories))

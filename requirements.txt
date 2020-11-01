@@ -7,3 +7,4 @@ pymongo
 dnspython
 win_unicode_console
 numpy
+pytest
