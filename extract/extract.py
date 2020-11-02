@@ -19,6 +19,7 @@ data = {}
 
 # Test para escapar comillas dobles.
 def replacer(objs):
+    ''' This function replace any strange character in the data extracted '''
     news_object = []
     for obj in objs:
         obj = obj.replace('\"', '')
@@ -32,7 +33,7 @@ def replacer(objs):
 
 # Test para construir enlaces.
 def build_link(host, link):
-    ''' Function that builds properly a url '''
+    ''' This function builds properly an url, it receives the url host and the link. '''
     if is_well_formed_link.match(link):
         return link
     elif is_root_path.match(link):
@@ -41,6 +42,7 @@ def build_link(host, link):
         return f'{host}/{link}'
 
 def recover_text_file(file):
+    ''' This function is for the data persistence, in order to not scrape the same article or the same category more than once. '''
     url = []
     file = open(file, 'r')
     for line in file:
@@ -52,7 +54,7 @@ def recover_text_file(file):
 
 # Test para verificar que sea distinto a none
 def categories_urls_extraction(host, iterator):
-    ''' Function that returns two list one for the category links and the other for the category names '''
+    ''' Function that returns one list for the category urls. '''
     logger.info(f'Extracting category list for {host}')
     # Variables definition
     categories_links = config()['news_sites'][iterator]['categories_links']
@@ -78,7 +80,7 @@ def categories_urls_extraction(host, iterator):
 
 # Test para verificar que no sea none
 def articles_urls_extraction(host, category_list, iterator):
-    ''' Function that extracts the urls for each category, and returns it in a list. '''
+    ''' Function that extracts the articles urls for each category, and returns it in a list. '''
     # Variables definition
     article_link = config()['news_sites'][iterator]['articles']
     article_list = []
@@ -110,7 +112,7 @@ def articles_urls_extraction(host, category_list, iterator):
 
 # Test para verificar titulo, contenido, fecha, url y categoría
 def articles_and_categories_extraction(host, article_url, iterator):
-    ''' Function that extracts the articles for each category, and returns it in a dictionary. '''
+    ''' Function that extracts the articles for url, and returns it in a dictionary, also, it returns a list for each category. '''
     # Variables definition
     title_query = config()['news_sites'][iterator]['queries']['title']
     subtitle_query = config()['news_sites'][iterator]['queries']['subtitle']
@@ -232,10 +234,12 @@ if __name__ == '__main__':
                 articles, category = articles_and_categories_extraction(host, article, i)
                 data['articles'].append(articles)
                 categories.append(category)
+        
     categories = list(set(categories))
     for category in categories:
             if category not in categories_recovered:
                 data['categories'].append({'categories':category})
+        
     
     with open('articles.csv', 'w+', encoding = "utf-8") as f:
         fieldnames = ['title', 'subtitle', 'body', 'images', 'category_long', 'tags', 'author','publication_date', 'news_url', 'host']

@@ -1,4 +1,5 @@
-*/*.csv
+*/articles.csv
+*/clean_articles.csv
 */*.ipynb
 
 load/client.py
