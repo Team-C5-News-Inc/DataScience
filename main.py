@@ -23,6 +23,10 @@ def _transform():
 def _load():
     logger.info('Starting load process...')
     subprocess.run(['python3', 'load.py'], cwd='./load')
+    if os.path.isfile('clean_categories.csv'):
+        subprocess.run(['rm', 'clean_categories.csv'], cwd='./load')
+    if os.path.isfile('clean_articles.csv'):
+        subprocess.run(['rm', 'clean_articles.csv'], cwd='./load')
 
 
 def main():
